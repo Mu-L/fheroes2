@@ -268,7 +268,7 @@ namespace
     // BMP files within AGG are not Bitmap images!
     fheroes2::Sprite loadBMPFile( const std::string & path )
     {
-        const std::vector<uint8_t> & data = AGG::getDataFromAggFile( path );
+        const std::vector<uint8_t> & data = AGG::getDataFromAggFile( path, false );
         if ( data.size() < 6 ) {
             // It is an invalid BMP file.
             return {};
@@ -582,12 +582,32 @@ namespace
 
     void loadICN( const int id );
 
+    void replacePOLAssetWithSW( const int id, const int assetIndex )
+    {
+        const std::vector<uint8_t> & body = ::AGG::getDataFromAggFile( ICN::getIcnFileName( id ), true );
+        ROStreamBuf imageStream( body );
+
+        imageStream.seek( headerSize + assetIndex * 13 );
+
+        fheroes2::ICNHeader header1;
+        imageStream >> header1;
+
+        fheroes2::ICNHeader header2;
+        imageStream >> header2;
+        const uint32_t dataSize = header2.offsetData - header1.offsetData;
+
+        const uint8_t * data = body.data() + headerSize + header1.offsetData;
+        const uint8_t * dataEnd = data + dataSize;
+
+        _icnVsSprite[id][assetIndex] = fheroes2::decodeICNSprite( data, dataEnd, header1 );
+    }
+
     void LoadOriginalICN( const int id )
     {
         // If this assertion blows up then something wrong with your logic and you load resources more than once!
         assert( _icnVsSprite[id].empty() );
 
-        const std::vector<uint8_t> & body = ::AGG::getDataFromAggFile( ICN::getIcnFileName( id ) );
+        const std::vector<uint8_t> & body = ::AGG::getDataFromAggFile( ICN::getIcnFileName( id ), false );
 
         if ( body.empty() ) {
             return;
@@ -2492,7 +2512,7 @@ namespace
                 throw std::logic_error( "The game resources are corrupted. Please use resources from a licensed version of Heroes of Might and Magic II." );
             }
 
-            const std::vector<uint8_t> & body = ::AGG::getDataFromAggFile( ICN::getIcnFileName( id ) );
+            const std::vector<uint8_t> & body = ::AGG::getDataFromAggFile( ICN::getIcnFileName( id ), false );
             const uint32_t crc32 = fheroes2::calculateCRC32( body.data(), body.size() );
 
             if ( id == ICN::SMALFONT ) {
@@ -3405,7 +3425,7 @@ namespace
 
                 // Since we cannot access game settings from here we are checking an existence
                 // of one of POL resources as an indicator for this version.
-                if ( !::AGG::getDataFromAggFile( ICN::getIcnFileName( ICN::X_TRACK1 ) ).empty() ) {
+                if ( !::AGG::getDataFromAggFile( ICN::getIcnFileName( ICN::X_TRACK1 ), false ).empty() ) {
                     fheroes2::Sprite editorIcon;
                     fheroes2::h2d::readImage( "main_menu_editor_icon.image", editorIcon );
 
@@ -4216,6 +4236,12 @@ namespace
                 fheroes2::Sprite & targetImage = _icnVsSprite[id][83];
                 targetImage = CreateHolyShoutEffect( _icnVsSprite[id][91], 1, 0 );
                 ApplyPalette( targetImage, PAL::GetPalette( PAL::PaletteType::PURPLE ) );
+
+                // The French and German Price of Loyalty assets contain a wrong artifact sprite at index 6. We replace it with the correct sprite from SW assets.
+                const int assetIndex = 6;
+                if ( _icnVsSprite[id][assetIndex].width() == 21 ) {
+                    replacePOLAssetWithSW( id, assetIndex );
+                }
             }
             return true;
         case ICN::OBJNARTI:
@@ -5075,13 +5101,25 @@ namespace
             auto & images = _icnVsSprite[id];
             if ( images.size() == 218 ) {
                 // Add 2 extra river deltas. Each delta has 7 parts.
-                images.resize( 218 + 14 );
+                // Add a new Stone Liths with 3 more images.
+                images.resize( 218 + 14 + 3 );
 
                 for ( size_t i = 0; i < 14; ++i ) {
                     images[218 + i].resize( images[i].height(), images[i].width() );
                     fheroes2::Transpose( images[i], images[218 + i] );
                     images[218 + i].setPosition( images[i].y(), images[i].x() );
                 }
+
+                fheroes2::Sprite temp;
+                fheroes2::h2d::readImage( "circular_stone_liths_center.image", temp );
+
+                images[232].resize( 32, 32 );
+                images[232].reset();
+                Copy( temp, 0, 0, images[232], 0, 0, temp.width(), temp.height() );
+                Copy( images[116], 0, temp.height(), images[232], 0, temp.height(), images[116].width(), images[116].height() - temp.height() );
+
+                fheroes2::h2d::readImage( "circular_stone_liths_left.image", images[233] );
+                fheroes2::h2d::readImage( "circular_stone_liths_top.image", images[234] );
             }
 
             return true;
@@ -5156,7 +5194,7 @@ namespace
         if ( tilImages.empty() ) {
             tilImages.resize( 4 ); // 4 possible sides
 
-            const std::vector<uint8_t> & data = ::AGG::getDataFromAggFile( tilFileName[id] );
+            const std::vector<uint8_t> & data = ::AGG::getDataFromAggFile( tilFileName[id], false );
             if ( data.size() < headerSize ) {
                 // The important resource is absent! Make sure that you are using the correct version of the game.
                 assert( 0 );
