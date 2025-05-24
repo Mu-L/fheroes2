@@ -138,7 +138,7 @@ namespace Dialog
 
     int selectLandscapeMiscellaneousObjectType( const int objectType );
 
-    void selectMineType( int32_t & type, int32_t & color );
+    int32_t selectMineType( const int32_t type );
 
     int selectMountainType( const int mountainType );
 
@@ -149,4 +149,6 @@ namespace Dialog
     int selectPowerUpObjectType( const int powerUpObjectType );
 
     int selectAdventureMiscellaneousObjectType( const int objectType );
+
+    uint8_t selectPlayerColor( const uint8_t color, const uint8_t availableColors );
 }

@@ -286,6 +286,15 @@ namespace
                     continue;
                 }
 
+                const auto & objects = Maps::getObjectsByGroup( objectIter->group );
+                assert( objectIter->index < objects.size() );
+                const auto objectType = objects[objectIter->index].objectType;
+
+                // Remove ownership data for capturable objects.
+                if ( Maps::isCapturableObject( objectType ) ) {
+                    mapFormat.capturableObjectsMetadata.erase( static_cast<int32_t>( objectIter->id ) );
+                }
+
                 if ( objectIter->group == Maps::ObjectGroup::KINGDOM_TOWNS ) {
                     // Towns and castles consist of four objects. We need to search them all and remove from map.
                     const uint32_t objectId = objectIter->id;
@@ -372,10 +381,6 @@ namespace
                     needRedraw = true;
                 }
                 else if ( objectIter->group == Maps::ObjectGroup::ADVENTURE_MISCELLANEOUS ) {
-                    const auto & objects = Maps::getObjectsByGroup( objectIter->group );
-
-                    assert( objectIter->index < objects.size() );
-                    const auto objectType = objects[objectIter->index].objectType;
                     switch ( objectType ) {
                     case MP2::OBJ_EVENT:
                         assert( mapFormat.adventureMapEventMetadata.find( objectIter->id ) != mapFormat.adventureMapEventMetadata.end() );
@@ -403,10 +408,6 @@ namespace
                     needRedraw = true;
                 }
                 else if ( objectIter->group == Maps::ObjectGroup::ADVENTURE_WATER ) {
-                    const auto & objects = Maps::getObjectsByGroup( objectIter->group );
-
-                    assert( objectIter->index < objects.size() );
-                    const auto objectType = objects[objectIter->index].objectType;
                     if ( objectType == MP2::OBJ_BOTTLE ) {
                         assert( mapFormat.signMetadata.find( objectIter->id ) != mapFormat.signMetadata.end() );
                         mapFormat.signMetadata.erase( objectIter->id );
@@ -423,10 +424,6 @@ namespace
                     needRedraw = true;
                 }
                 else if ( objectIter->group == Maps::ObjectGroup::ADVENTURE_TREASURES ) {
-                    const auto & objects = Maps::getObjectsByGroup( objectIter->group );
-
-                    assert( objectIter->index < objects.size() );
-                    const auto objectType = objects[objectIter->index].objectType;
                     if ( objectType == MP2::OBJ_RESOURCE ) {
                         mapFormat.standardMetadata.erase( objectIter->id );
                     }
@@ -448,10 +445,6 @@ namespace
                     needRedraw = true;
                 }
                 else if ( objectIter->group == Maps::ObjectGroup::ADVENTURE_POWER_UPS ) {
-                    const auto & objects = Maps::getObjectsByGroup( objectIter->group );
-
-                    assert( objectIter->index < objects.size() );
-                    const auto objectType = objects[objectIter->index].objectType;
                     switch ( objectType ) {
                     case MP2::OBJ_SHRINE_FIRST_CIRCLE:
                     case MP2::OBJ_SHRINE_SECOND_CIRCLE:
@@ -509,7 +502,7 @@ namespace
                          return true;
                      }
 
-                     return tileToCheck.GoodForUltimateArtifact();
+                     return tileToCheck.isSuitableForUltimateArtifact();
                  } ) ) {
                 errorMessage = _( "The Ultimate Artifact can only be placed on terrain where digging is possible." );
                 return false;
@@ -881,16 +874,24 @@ namespace Interface
                     eventViewWorld();
                 }
                 else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_SCROLL_LEFT ) ) {
-                    _gameArea.SetScroll( SCROLL_LEFT );
+                    if ( !_gameArea.isDragScroll() ) {
+                        _gameArea.SetScroll( SCROLL_LEFT );
+                    }
                 }
                 else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_SCROLL_RIGHT ) ) {
-                    _gameArea.SetScroll( SCROLL_RIGHT );
+                    if ( !_gameArea.isDragScroll() ) {
+                        _gameArea.SetScroll( SCROLL_RIGHT );
+                    }
                 }
                 else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_SCROLL_UP ) ) {
-                    _gameArea.SetScroll( SCROLL_TOP );
+                    if ( !_gameArea.isDragScroll() ) {
+                        _gameArea.SetScroll( SCROLL_TOP );
+                    }
                 }
                 else if ( HotKeyPressEvent( Game::HotKeyEvent::WORLD_SCROLL_DOWN ) ) {
-                    _gameArea.SetScroll( SCROLL_BOTTOM );
+                    if ( !_gameArea.isDragScroll() ) {
+                        _gameArea.SetScroll( SCROLL_BOTTOM );
+                    }
                 }
                 else if ( HotKeyPressEvent( Game::HotKeyEvent::EDITOR_UNDO_LAST_ACTION ) ) {
                     undoAction();
@@ -1201,13 +1202,13 @@ namespace Interface
         LocalEvent & le = LocalEvent::Get();
 
         while ( le.HandleEvents() ) {
-            buttonNew.drawOnState( le.isMouseLeftButtonPressedInArea( buttonNew.area() ) );
-            buttonLoad.drawOnState( le.isMouseLeftButtonPressedInArea( buttonLoad.area() ) );
-            buttonSave.drawOnState( le.isMouseLeftButtonPressedInArea( buttonSave.area() ) );
-            buttonQuit.drawOnState( le.isMouseLeftButtonPressedInArea( buttonQuit.area() ) );
-            buttonMainMenu.drawOnState( le.isMouseLeftButtonPressedInArea( buttonMainMenu.area() ) );
-            buttonPlayMap.drawOnState( le.isMouseLeftButtonPressedInArea( buttonPlayMap.area() ) );
-            buttonCancel.drawOnState( le.isMouseLeftButtonPressedInArea( buttonCancel.area() ) );
+            buttonNew.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonNew.area() ) );
+            buttonLoad.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonLoad.area() ) );
+            buttonSave.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonSave.area() ) );
+            buttonQuit.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonQuit.area() ) );
+            buttonMainMenu.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonMainMenu.area() ) );
+            buttonPlayMap.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonPlayMap.area() ) );
+            buttonCancel.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonCancel.area() ) );
 
             if ( le.MouseClickLeft( buttonNew.area() ) || Game::HotKeyPressEvent( Game::HotKeyEvent::EDITOR_NEW_MAP_MENU ) ) {
                 if ( eventNewMap() == fheroes2::GameMode::EDITOR_NEW_MAP ) {
@@ -1574,6 +1575,37 @@ namespace Interface
 
                     fheroes2::showStandardTextMessage( MP2::StringObject( objectType ), std::move( str ), Dialog::OK );
                 }
+                else if ( Maps::isCapturableObject( objectType ) ) {
+                    if ( Color::Count( _mapFormat.availablePlayerColors ) == 0 ) {
+                        _warningMessage.reset( _( "There are no players on the map, so no one can own this object." ) );
+                        return;
+                    }
+
+                    auto ownershipMetadata = _mapFormat.capturableObjectsMetadata.find( object.id );
+                    const bool hasOwnershipMetadata = ( ownershipMetadata != _mapFormat.capturableObjectsMetadata.end() );
+                    const uint8_t ownerColor = hasOwnershipMetadata ? ownershipMetadata->second.ownerColor : uint8_t{ Color::NONE };
+
+                    const uint8_t newColor = Dialog::selectPlayerColor( ownerColor, _mapFormat.availablePlayerColors );
+
+                    if ( newColor != ownerColor ) {
+                        fheroes2::ActionCreator action( _historyManager, _mapFormat );
+
+                        if ( newColor == Color::NONE ) {
+                            _mapFormat.capturableObjectsMetadata.erase( object.id );
+                        }
+                        else if ( hasOwnershipMetadata ) {
+                            ownershipMetadata->second.ownerColor = newColor;
+                        }
+                        else {
+                            _mapFormat.capturableObjectsMetadata[object.id].ownerColor = newColor;
+                        }
+
+                        world.CaptureObject( tileIndex, newColor );
+                        setRedraw( mapUpdateFlags );
+
+                        action.commit();
+                    }
+                }
                 else {
                     std::string msg = _( "%{object} has no properties to change." );
                     StringReplace( msg, "%{object}", MP2::StringObject( objectType ) );
@@ -1857,28 +1889,23 @@ namespace Interface
             }
         }
         else if ( groupType == Maps::ObjectGroup::ADVENTURE_MINES ) {
-            int32_t type = -1;
-            int32_t color = -1;
-
-            _editorPanel.getMineObjectProperties( type, color );
-            if ( type < 0 || color < 0 ) {
+            if ( objectType < 0 ) {
                 // Check your logic!
                 assert( 0 );
                 return;
             }
 
-            if ( !verifyObjectPlacement( tilePos, groupType, type, errorMessage ) ) {
+            if ( !verifyObjectPlacement( tilePos, groupType, objectType, errorMessage ) ) {
                 _warningMessage.reset( std::move( errorMessage ) );
                 return;
             }
 
             fheroes2::ActionCreator action( _historyManager, _mapFormat );
 
-            if ( !_setObjectOnTile( tile, groupType, type ) ) {
+            if ( !_setObjectOnTile( tile, groupType, objectType ) ) {
                 return;
             }
 
-            // TODO: Place owner flag according to the color state.
             action.commit();
         }
         else if ( groupType == Maps::ObjectGroup::LANDSCAPE_MISCELLANEOUS ) {
@@ -2160,11 +2187,9 @@ namespace Interface
             objectIndex = type;
         }
         else if ( groupType == Maps::ObjectGroup::ADVENTURE_MINES ) {
-            int32_t type = -1;
-            int32_t color = -1;
+            const int32_t type = _editorPanel.getSelectedObjectType();
 
-            _editorPanel.getMineObjectProperties( type, color );
-            if ( type < 0 || color < 0 ) {
+            if ( type < 0 ) {
                 // Check your logic!
                 assert( 0 );
                 return false;

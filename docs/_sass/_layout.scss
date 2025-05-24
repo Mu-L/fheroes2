@@ -112,6 +112,7 @@ $body-font: "Asul";
     }
 
     a {
+      text-shadow: none;
       color: map-get($theme-map, highlight-color);
       text-decoration: none;
 
@@ -135,6 +136,10 @@ $body-font: "Asul";
       text-shadow: map-get($theme-map, header-text-shadow);
       &:hover {
         color: lighten(map-get($theme-map, header-color), 10%);
+      }
+
+      &:hover .heading-anchor {
+        opacity: 1;
       }
 
       .heading-link {
@@ -210,9 +215,6 @@ $body-font: "Asul";
     ul {
       text-shadow: map-get($theme-map, body-text-shadow);
     }
-    a {
-      text-shadow: none;
-    }
 
     code {
       font-family: monospace;
@@ -231,7 +233,6 @@ $body-font: "Asul";
       text-align: center;
       margin-bottom: 0;
       border-bottom: 0.125em solid map-get($theme-map, secondary-color);
-      // text-shadow: 0.125em 0.125em 0.25em $primary-color;
 
       h1 {
         font-size: 4em;
@@ -281,7 +282,7 @@ $body-font: "Asul";
 
       h2 {
         font-family: $body-font, sans-serif;
-        font-size: 1.5em;
+        font-size: 1em;
         margin: 0.625em 0;
         border: none;
       }
@@ -319,7 +320,7 @@ $body-font: "Asul";
       padding: 0 1.25em 1.25em;
       background: rgba(map-get($theme-map, page-color), 0.9);
       box-shadow: 0 0 1.25em map-get($theme-map, border-color);
-      font-size: 1.6em;
+      font-size: 1.5em;
     }
 
     .image-showcase {
@@ -337,11 +338,13 @@ $body-font: "Asul";
       }
 
       img.full-image {
+        aspect-ratio: 16/9;
         width: 100%;
         height: auto;
       }
 
       img.half-image {
+        aspect-ratio: 4/3;
         width: calc(50% - 0.5em);
         height: auto;
       }
@@ -510,17 +513,6 @@ $body-font: "Asul";
       }
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      &:hover .heading-anchor {
-        opacity: 1;
-      }
-    }
-
     table {
       width: 100%;
       border-collapse: separate;
@@ -580,7 +572,7 @@ $body-font: "Asul";
 
       .shell {
         padding: 0.625em;
-        font-size: 2.5em;
+        font-size: 1.5em;
       }
 
       img.game-screenshot {

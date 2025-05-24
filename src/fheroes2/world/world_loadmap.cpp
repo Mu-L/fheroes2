@@ -42,6 +42,7 @@
 #include "campaign_scenariodata.h"
 #include "castle.h"
 #include "color.h"
+#include "game_language.h"
 #include "game_over.h"
 #include "game_static.h"
 #include "heroes.h"
@@ -66,6 +67,7 @@
 #include "settings.h"
 #include "skill.h"
 #include "spell.h"
+#include "ui_language.h"
 #include "world.h" // IWYU pragma: associated
 #include "world_object_uid.h"
 
@@ -665,6 +667,12 @@ bool World::LoadMapMP2( const std::string & filename, const bool isOriginalMp2Fi
         }
     }
 
+    // For the original French version we update the language-specific characters
+    // to match CP1252 only if the French language is selected.
+    if ( fheroes2::getCurrentLanguage() == fheroes2::SupportedLanguage::French && fheroes2::getResourceLanguage() == fheroes2::SupportedLanguage::French ) {
+        fixFrenchCharactersInStrings();
+    }
+
     // If this assertion blows up it means that we are not reading the data properly from the file.
     assert( fs.tell() + 4 == fs.size() );
 
@@ -717,6 +725,7 @@ bool World::loadResurrectionMap( const std::string & filename )
     const auto & artifactObjects = Maps::getObjectsByGroup( Maps::ObjectGroup::ADVENTURE_ARTIFACTS );
     const auto & treasuresObjects = Maps::getObjectsByGroup( Maps::ObjectGroup::ADVENTURE_TREASURES );
     const auto & powerUpsObjects = Maps::getObjectsByGroup( Maps::ObjectGroup::ADVENTURE_POWER_UPS );
+    const auto & minesObjects = Maps::getObjectsByGroup( Maps::ObjectGroup::ADVENTURE_MINES );
 
 #if defined( WITH_DEBUG )
     std::set<uint32_t> standardMetadataUIDs;
@@ -1031,6 +1040,9 @@ bool World::loadResurrectionMap( const std::string & filename )
                     break;
                 }
                 default:
+                    // Update object ownership.
+                    Maps::captureObject( map, static_cast<int32_t>( tileId ), object.id, objectType );
+
                     // Other objects do not have metadata as of now.
                     break;
                 }
@@ -1139,6 +1151,13 @@ bool World::loadResurrectionMap( const std::string & filename )
                 default:
                     break;
                 }
+            }
+            else if ( object.group == Maps::ObjectGroup::ADVENTURE_MINES ) {
+                assert( object.index < minesObjects.size() );
+
+                const MP2::MapObjectType objectType = minesObjects[object.index].objectType;
+
+                Maps::captureObject( map, static_cast<int32_t>( tileId ), object.id, objectType );
             }
         }
     }
@@ -1457,7 +1476,7 @@ void World::setUltimateArtifact( const int32_t tileId, const int32_t radius )
             return false;
         }
 
-        return getTile( idx ).GoodForUltimateArtifact();
+        return getTile( idx ).isSuitableForUltimateArtifact();
     };
 
     if ( tileId < 0 ) {

@@ -3,28 +3,76 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=640" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="author" content="{{ site.github.owner_name }}" />
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:title"
+      content="{{ site.title | default: site.github.repository_name }}"
+    />
+    <meta
+      property="og:description"
+      content="A recreation of the Heroes of Might and Magic II game engine. This open source multiplatform project, written from scratch, is designed to reproduce the original game with significant
+    improvements in gameplay, graphics and logic (including support for high-resolution graphics, improved AI, numerous fixes
+    and user interface improvements), breathing new life into one of the most addictive turn-based strategy games."
+    />
+    <meta
+      property="og:image"
+      content="{{ '/images/screenshots/screenshot_world_map.webp' | absolute_url }}"
+    />
+    <meta property="og:url" content="{{ page.url | absolute_url }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="fheroes2" />
+    <meta property="article:author" content="{{ site.github.owner_name }}" />
+    <meta property="article:publisher" content="{{ site.github.owner_url }}" />
+    {% if page.date %}
+    <meta
+      property="article:published_time"
+      content="{{ page.date | date_to_xmlschema }}"
+    />
+    {% endif %} {% if page.last_modified_at %}
+    <meta
+      property="article:modified_time"
+      content="{{ page.last_modified_at | date_to_xmlschema }}"
+    />
+    {% endif %}
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Jacquard+24&family=Lancelot&display=swap"
-      rel="stylesheet"
+      href="{{ '/assets/css/fonts.css?v=' | append: site.github.build_revision | relative_url }}"
+      rel="preload"
+      as="style"
+      onload="this.rel='stylesheet';this.removeAttribute('onload');"
     />
 
     <link
-      rel="stylesheet"
       href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}"
-      media="screen"
+      rel="preload"
+      as="style"
+      onload="this.rel='stylesheet';this.removeAttribute('onload');"
     />
 
     <!-- Scripts -->
-    <script src="{{ '/assets/js/theme-toggle.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script src="{{ '/assets/js/accessibility.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/templates.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script src="{{ '/assets/js/heading-copy.js?v=' | append: site.github.build_revision | relative_url }}"></script>
-    <script src="{{ '/assets/js/code-copy.js?v=' | append: site.github.build_revision | relative_url }}"></script>
+    <script
+      src="{{ '/assets/js/accessibility-manager.js?v=' | append: site.github.build_revision | relative_url }}"
+      defer
+    ></script>
+    <script
+      src="{{ '/assets/js/theme-manager.js?v=' | append: site.github.build_revision | relative_url }}"
+      defer
+    ></script>
+    <script
+      src="{{ '/assets/js/templates.js?v=' | append: site.github.build_revision | relative_url }}"
+      defer
+    ></script>
+    <script
+      src="{{ '/assets/js/heading-copy-manager.js?v=' | append: site.github.build_revision | relative_url }}"
+      defer
+    ></script>
+    <script
+      src="{{ '/assets/js/code-copy-manager.js?v=' | append: site.github.build_revision | relative_url }}"
+      defer
+    ></script>
 
     {% seo %}
     <link
@@ -42,7 +90,6 @@
           class="btn btn-primary"
           aria-label="Toggle dark mode"
           aria-pressed="false"
-          role="button"
           tabindex="0"
         >
           🌙 Dark Mode

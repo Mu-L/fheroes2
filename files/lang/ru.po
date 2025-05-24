@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fheroes2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 14:24+0000\n"
+"POT-Creation-Date: 2025-05-21 04:50+0000\n"
 "PO-Revision-Date: 2025-04-20 12:45+0300\n"
 "Last-Translator: fheroes2 team <fhomm2@gmail.com>\n"
 "Language-Team: <ru@li.org> <>\n"
@@ -686,9 +686,6 @@ msgstr "Удача"
 msgid "Spell Points"
 msgstr "Очки магии"
 
-msgid "Hero's Options"
-msgstr "Возможности героя"
-
 msgid "Cast Spell"
 msgstr "Произнести заклинание"
 
@@ -706,6 +703,9 @@ msgstr "Экран героя"
 
 msgid "Captain's Options"
 msgstr "Возможности капитана замка"
+
+msgid "Hero's Options"
+msgstr "Возможности героя"
 
 msgid ""
 "Cast a magical spell. You may only cast one spell per combat round. The "
@@ -3628,6 +3628,10 @@ msgstr "Выберите объект типа бонус:"
 msgid "Select Adventure Object:"
 msgstr "Выберите интерактивный объект:"
 
+#, fuzzy
+msgid "Select color"
+msgstr "Выберите существо:"
+
 msgid "Players Icon"
 msgstr "Значок игроков"
 
@@ -4239,6 +4243,9 @@ msgstr "Этот артефакт"
 msgid "The total number of obelisks is %{count}."
 msgstr "Общее количество обелисков на карте: %{count}."
 
+msgid "There are no players on the map, so no one can own this object."
+msgstr ""
+
 msgid "Roads"
 msgstr "Дороги"
 
@@ -4688,6 +4695,9 @@ msgstr "СОБЫТИЯ"
 msgid "LANGUAGE"
 msgstr "ЯЗЫК"
 
+msgid "ABOUT"
+msgstr ""
+
 msgid ""
 "The entered map description exceeds the maximum allowed 5 rows. It will be "
 "shortened to fit the map description field."
@@ -4710,6 +4720,9 @@ msgstr "Изменить название карты"
 msgid "Change Map Description"
 msgstr "Изменить описание карты"
 
+msgid "About"
+msgstr ""
+
 msgid "Click to accept the changes made."
 msgstr "Нажмите, чтобы применить внесённые изменения."
 
@@ -4727,6 +4740,11 @@ msgstr "События"
 
 msgid "Click to change the language of the map."
 msgstr "Изменить язык, используемый на карте."
+
+msgid ""
+"Click to edit notes from the map creator. These notes are optional and do "
+"not appear during gameplay."
+msgstr ""
 
 msgid "Click to change your map name."
 msgstr "Нажмите, чтобы изменить название Вашей карты."
@@ -5826,6 +5844,14 @@ msgstr ""
 "Враг захватил %{name}!\n"
 "Вы проиграли."
 
+#, fuzzy
+msgid ""
+"The enemy has found the %{name}.\n"
+"Your quest is a failure."
+msgstr ""
+"Вы нашли %{name}.\n"
+"Ваше задание выполнено."
+
 msgid ""
 "The enemy has built up over %{count} gold in his treasury.\n"
 "You must bow done in defeat before his wealth and power."
@@ -6440,6 +6466,10 @@ msgstr "Словацкий"
 
 msgid "Vietnamese"
 msgstr "Вьетнамский"
+
+#, fuzzy
+msgid "Greek"
+msgstr "Зелёный"
 
 msgid "Slow"
 msgstr "Медленная"
@@ -7213,24 +7243,17 @@ msgstr ""
 
 msgid ""
 "After spending hours trying to fish the chest out of the sea, you open it "
-"and find %{gold} gold pieces."
-msgstr ""
-"Потратив несколько часов на попытки выловить сундук из воды, Вы наконец "
-"открыли его и нашли внутри %{gold} золотых."
-
-msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it "
 "and find %{gold} gold and the %{art}."
 msgstr ""
 "Потратив несколько часов на попытки выловить сундук из воды, Вы наконец "
 "открыли его и нашли внутри %{gold} золотых и %{art}."
 
 msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it, "
-"only to find it empty."
+"After spending hours trying to fish the chest out of the sea, you open it "
+"and find %{gold} gold pieces."
 msgstr ""
 "Потратив несколько часов на попытки выловить сундук из воды, Вы наконец "
-"открыли его, но он оказался пуст."
+"открыли его и нашли внутри %{gold} золотых."
 
 msgid ""
 "After scouring the area, you fall upon a hidden treasure cache. You may take "
@@ -7239,13 +7262,6 @@ msgid ""
 msgstr ""
 "Исследуя окрестности, Вы наткнулись на древний ларец. Золото можно оставить "
 "себе или раздать крестьянам в обмен на опыт. Оставите золото себе?"
-
-msgid ""
-"After scouring the area, you fall upon a hidden chest, containing the "
-"%{gold} gold pieces."
-msgstr ""
-"Исследуя окрестности, Вы наткнулись на древний ларец в котором лежит %{gold} "
-"золотых."
 
 msgid ""
 "After scouring the area, you fall upon a hidden chest, containing the "
@@ -12150,6 +12166,20 @@ msgstr ""
 "Новую версию игры можно найти на сайте:\n"
 "https://github.com/ihhub/\n"
 "fheroes2/releases"
+
+#~ msgid ""
+#~ "After spending hours trying to fish the chest out of the sea, you open "
+#~ "it, only to find it empty."
+#~ msgstr ""
+#~ "Потратив несколько часов на попытки выловить сундук из воды, Вы наконец "
+#~ "открыли его, но он оказался пуст."
+
+#~ msgid ""
+#~ "After scouring the area, you fall upon a hidden chest, containing the "
+#~ "%{gold} gold pieces."
+#~ msgstr ""
+#~ "Исследуя окрестности, Вы наткнулись на древний ларец в котором лежит "
+#~ "%{gold} золотых."
 
 #~ msgid ""
 #~ "Select the campaign difficulty. This can be lowered at any point during "

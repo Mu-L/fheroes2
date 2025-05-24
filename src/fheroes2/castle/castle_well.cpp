@@ -245,9 +245,9 @@ void Castle::_openWell()
     Game::passAnimationDelay( Game::CASTLE_UNIT_DELAY );
 
     while ( le.HandleEvents( Game::isDelayNeeded( { Game::CASTLE_UNIT_DELAY } ) ) ) {
-        buttonExit.drawOnState( le.isMouseLeftButtonPressedInArea( buttonExit.area() ) );
+        buttonExit.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonExit.area() ) );
 
-        buttonMax.drawOnState( le.isMouseLeftButtonPressedInArea( buttonMax.area() ) );
+        buttonMax.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonMax.area() ) );
         const BuildingType pressedHotkeyBuildingID = getPressedBuildingHotkey();
 
         if ( le.MouseClickLeft( buttonExit.area() ) || Game::HotKeyCloseWindow() ) {
@@ -506,7 +506,7 @@ void Castle::_wellRedrawBackground( fheroes2::Image & background ) const
         text.draw( renderPoint.x - text.width() / 2, renderPoint.y, background );
         renderPoint.y += text.height( text.width() );
 
-        text.set( Speed::String( static_cast<int>( monster.GetSpeed() ) ), statsFontType );
+        text.set( Speed::String( monster.GetSpeed() ), statsFontType );
         text.draw( renderPoint.x - text.width() / 2, renderPoint.y, background );
         renderPoint.y += 2 * ( text.height( text.width() ) ); // skip a line
 

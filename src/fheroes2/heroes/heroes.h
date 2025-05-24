@@ -603,7 +603,7 @@ public:
     }
 
     void Scout( const int tileIndex ) const;
-    int GetScoutingDistance() const;
+    int32_t GetScoutingDistance() const;
 
     // Returns the area in map tiles around hero's position in his scout range.
     fheroes2::Rect GetScoutRoi() const;
@@ -699,6 +699,10 @@ public:
     }
 
     void resetHeroSprite();
+
+    // Update French language-specific characters to match CP1252.
+    // Call this method only when loading maps made with original French editor.
+    void fixFrenchCharactersInName();
 
 private:
     friend OStreamBase & operator<<( OStreamBase & stream, const Heroes & hero );

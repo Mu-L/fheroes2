@@ -341,7 +341,7 @@ namespace Battle
         void RedrawActionTowerPart2( const Tower & tower, const TargetInfo & target );
         void RedrawActionCatapultPart1( const CastleDefenseStructure catapultTarget, const bool isHit );
         void RedrawActionCatapultPart2( const CastleDefenseStructure catapultTarget );
-        void RedrawActionTeleportSpell( Unit & target, const int32_t dst );
+        void redrawActionTeleportSpell( Unit & target, const int32_t dst );
         void redrawActionEarthquakeSpellPart1( const std::vector<CastleDefenseStructure> & targets );
         void redrawActionEarthquakeSpellPart2( const std::vector<CastleDefenseStructure> & targets );
         void RedrawActionSummonElementalSpell( Unit & target );
@@ -365,8 +365,13 @@ namespace Battle
         void RedrawCover();
         void _redrawBattleGround();
         void _redrawCoverStatic();
-        void RedrawLowObjects( const int32_t cellId );
-        void RedrawHighObjects( const int32_t cellId );
+
+        // Draws cracks and pools that are not higher than the ground level.
+        void _redrawGroundObjects( const int32_t cellId );
+
+        // Draws trees, rocks, bushes and other objects that are higher than the ground level.
+        void _redrawHighObjects( const int32_t cellId );
+
         void RedrawCastle( const Castle & castle, const int32_t cellId );
         void RedrawCastleMainTower( const Castle & castle );
         void RedrawKilled();
@@ -377,16 +382,16 @@ namespace Battle
         void RedrawArmies();
         void RedrawTroopSprite( const Unit & unit );
 
-        fheroes2::Point drawTroopSprite( const Unit & unit, const fheroes2::Sprite & troopSprite );
+        fheroes2::Point _drawTroopSprite( const Unit & unit, const fheroes2::Sprite & troopSprite );
 
         void RedrawTroopCount( const Unit & unit );
 
         void RedrawActionWincesKills( const TargetsInfo & targets, Unit * attacker = nullptr, const Unit * defender = nullptr );
         void RedrawActionArrowSpell( const Unit & target );
         void RedrawActionColdRaySpell( Unit & target );
-        void RedrawActionDisruptingRaySpell( const Unit & target );
-        void RedrawActionBloodLustSpell( const Unit & target );
-        void RedrawActionStoneSpell( const Unit & target );
+        void _redrawActionDisruptingRaySpell( Unit & target );
+        void _redrawActionBloodLustSpell( const Unit & target );
+        void _redrawActionStoneSpell( const Unit & target );
         void RedrawActionColdRingSpell( const int32_t dst, const TargetsInfo & targets );
         void RedrawActionElementalStormSpell( const TargetsInfo & targets );
         void RedrawActionArmageddonSpell();
@@ -476,7 +481,7 @@ namespace Battle
         const Unit * _currentUnit{ nullptr };
         const Unit * _movingUnit{ nullptr };
         const Unit * _flyingUnit{ nullptr };
-        const fheroes2::Sprite * b_current_sprite{ nullptr };
+        const fheroes2::Sprite * _spriteInsteadCurrentUnit{ nullptr };
         fheroes2::Point _movingPos;
         fheroes2::Point _flyingPos;
 
