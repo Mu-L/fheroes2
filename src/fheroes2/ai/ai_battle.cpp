@@ -35,6 +35,7 @@
 #include <set>
 #include <string>
 #include <tuple>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -72,10 +73,10 @@ namespace
 
     struct MeleeAttackOutcome
     {
-        int32_t fromIndex = -1;
-        double attackValue = INT32_MIN;
-        double positionValue = INT32_MIN;
-        bool canAttackImmediately = false;
+        int32_t fromIndex{ -1 };
+        double attackValue{ std::numeric_limits<double>::lowest() };
+        double positionValue{ std::numeric_limits<double>::lowest() };
+        bool canAttackImmediately{ false };
     };
 
     bool ValueHasImproved( double primary, double primaryMax, double secondary, double secondaryMax )
@@ -94,7 +95,7 @@ namespace
                     && ValueHasImproved( newOutcome.positionValue, previous.positionValue, newOutcome.attackValue, previous.attackValue ) );
     }
 
-    int32_t doubleCellAttackValue( const Battle::Unit & attacker, const Battle::Unit & target, const int32_t from, const int32_t targetCell )
+    double doubleCellAttackValue( const Battle::Unit & attacker, const Battle::Unit & target, const int32_t from, const int32_t targetCell )
     {
         const Battle::Cell * behind = Battle::Board::GetCell( targetCell, Battle::Board::GetDirection( from, targetCell ) );
         const Battle::Unit * secondaryTarget = ( behind != nullptr ) ? behind->GetUnit() : nullptr;
@@ -103,7 +104,7 @@ namespace
             return secondaryTarget->evaluateThreatForUnit( attacker );
         }
 
-        return 0;
+        return 0.0;
     }
 
     std::pair<int32_t, int> optimalAttackVector( const Battle::Unit & attacker, const Battle::Unit & target, const Battle::Position & attackPos )
@@ -156,7 +157,7 @@ namespace
         return bestAttackVector;
     }
 
-    int32_t optimalAttackValue( const Battle::Unit & attacker, const Battle::Unit & target, const Battle::Position & attackPos )
+    double optimalAttackValue( const Battle::Unit & attacker, const Battle::Unit & target, const Battle::Position & attackPos )
     {
         assert( attackPos.isValidForUnit( attacker ) );
 
@@ -176,11 +177,11 @@ namespace
                 unitsUnderAttack.insert( unit );
             }
 
-            return std::accumulate( unitsUnderAttack.begin(), unitsUnderAttack.end(), static_cast<int32_t>( 0 ),
-                                    [&attacker]( const int32_t total, const Battle::Unit * unit ) { return total + unit->evaluateThreatForUnit( attacker ); } );
+            return std::accumulate( unitsUnderAttack.begin(), unitsUnderAttack.end(), static_cast<double>( 0.0 ),
+                                    [&attacker]( const double total, const Battle::Unit * unit ) { return total + unit->evaluateThreatForUnit( attacker ); } );
         }
 
-        int32_t attackValue = target.evaluateThreatForUnit( attacker );
+        double attackValue = target.evaluateThreatForUnit( attacker );
 
         // A double cell attack should only be considered if the attacker is actually able to attack the target from the given attack position. Otherwise, the attacker
         // can at least block the target if the target is a shooter, so this position can be valuable in any case.
@@ -196,7 +197,7 @@ namespace
         return attackValue;
     }
 
-    using PositionValues = std::map<Battle::Position, int32_t>;
+    using PositionValues = std::map<Battle::Position, double>;
 
     PositionValues evaluatePotentialAttackPositions( Battle::Arena & arena, const Battle::Unit & attacker )
     {
@@ -245,13 +246,14 @@ namespace
                     continue;
                 }
 
-                const int32_t attackValue = optimalAttackValue( attacker, *enemyUnit, pos );
+                const double attackValue = optimalAttackValue( attacker, *enemyUnit, pos );
 
                 if ( const auto [iter, inserted] = result.try_emplace( pos, attackValue ); !inserted ) {
                     // If attacker is able to attack all adjacent cells, then the values of all units in adjacent cells (including archers) have already been taken into
                     // account
                     if ( attacker.isAllAdjacentCellsAttack() ) {
-                        assert( iter->second == attackValue );
+                        // Silence the -Wfloat-equal, since the values here should be literally equal
+                        assert( std::make_tuple( iter->second ) == std::make_tuple( attackValue ) );
                     }
                     else if ( enemyUnit->isArchers() ) {
                         iter->second += attackValue;
@@ -420,8 +422,8 @@ namespace
 
     struct CellDistanceInfo
     {
-        int32_t idx = -1;
-        uint32_t dist = UINT32_MAX;
+        int32_t idx{ -1 };
+        uint32_t dist{ UINT32_MAX };
     };
 
     CellDistanceInfo findNearestCellNextToUnit( Battle::Arena & arena, const Battle::Unit & currentUnit, const Battle::Unit & target )
@@ -627,7 +629,7 @@ void AI::BattlePlanner::BattleTurn( Battle::Arena & arena, const Battle::Unit & 
 
 bool AI::BattlePlanner::isLimitOfTurnsExceeded( const Battle::Arena & arena, Battle::Actions & actions )
 {
-    const int currentColor = arena.GetCurrentColor();
+    const PlayerColor currentColor = arena.GetCurrentColor();
 
     // Not the attacker's turn, no further checks
     if ( currentColor != arena.GetArmy1Color() ) {
@@ -663,7 +665,7 @@ bool AI::BattlePlanner::isLimitOfTurnsExceeded( const Battle::Arena & arena, Bat
         if ( arena.AutoCombatInProgress() && Battle::Arena::GetInterface() != nullptr ) {
             assert( arena.CanToggleAutoCombat() );
 
-            actions.emplace_back( Battle::Command::TOGGLE_AUTO_COMBAT, currentColor );
+            actions.emplace_back( Battle::Command::TOGGLE_AUTO_COMBAT, static_cast<std::underlying_type_t<PlayerColor>>( currentColor ) );
 
             DEBUG_LOG( DBG_BATTLE, DBG_INFO, Color::String( currentColor ) << " has used up the limit of turns without deaths, auto combat is turned off" )
         }
@@ -1429,7 +1431,7 @@ Battle::Actions AI::BattlePlanner::archerDecision( Battle::Arena & arena, const 
     // Archers are able to shoot
     else {
         BattleTargetPair target;
-        double highestPriority = INT32_MIN;
+        double highestPriority = std::numeric_limits<double>::lowest();
 
         for ( const Battle::Unit * enemy : enemies ) {
             assert( enemy != nullptr );
@@ -1562,7 +1564,7 @@ AI::BattleTargetPair AI::BattlePlanner::meleeUnitOffense( Battle::Arena & arena,
                 // If this distance was zero, it would mean that this enemy unit would have already been attacked by the current unit
                 assert( nearestCellInfo.dist > 0 );
 
-                const double priority = static_cast<double>( enemy->evaluateThreatForUnit( currentUnit ) ) / nearestCellInfo.dist;
+                const double priority = enemy->evaluateThreatForUnit( currentUnit ) / nearestCellInfo.dist;
                 if ( priority < maxPriority ) {
                     continue;
                 }
@@ -1949,7 +1951,7 @@ AI::BattleTargetPair AI::BattlePlanner::meleeUnitDefense( Battle::Arena & arena,
 
             // If the decision is made to attack one of the neighboring enemy units (if any) while covering the archer, then we should choose the best target
             {
-                int32_t bestAttackValue = 0;
+                double bestAttackValue = 0.0;
 
                 for ( const Battle::Unit * enemy : enemies ) {
                     assert( enemy != nullptr );
@@ -1961,7 +1963,7 @@ AI::BattleTargetPair AI::BattlePlanner::meleeUnitDefense( Battle::Arena & arena,
                     const Battle::Position pos = Battle::Position::GetReachable( currentUnit, target.cell );
                     assert( pos.isValidForUnit( currentUnit ) );
 
-                    const int32_t attackValue = optimalAttackValue( currentUnit, *enemy, pos );
+                    const double attackValue = optimalAttackValue( currentUnit, *enemy, pos );
                     if ( bestAttackValue < attackValue ) {
                         bestAttackValue = attackValue;
 

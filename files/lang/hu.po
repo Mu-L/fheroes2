@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fheroes2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 14:24+0000\n"
+"POT-Creation-Date: 2025-05-28 00:46+0000\n"
 "PO-Revision-Date: 2025-04-23 20:48+0200\n"
 "Last-Translator: Berda Jenő <big4billy@gmail.com>\n"
 "Language-Team: fheroes2 team <fhomm2@gmail.com>\n"
@@ -672,9 +672,6 @@ msgstr "Szerencse"
 msgid "Spell Points"
 msgstr "Varázspontok"
 
-msgid "Hero's Options"
-msgstr "Hős beállításai"
-
 msgid "Cast Spell"
 msgstr "Varázslás"
 
@@ -692,6 +689,9 @@ msgstr "Hős képernyő"
 
 msgid "Captain's Options"
 msgstr "Kapitány beállítások"
+
+msgid "Hero's Options"
+msgstr "Hős beállításai"
 
 msgid ""
 "Cast a magical spell. You may only cast one spell per combat round. The "
@@ -3600,6 +3600,10 @@ msgstr "Képességnövelő objektum kiválasztása:"
 msgid "Select Adventure Object:"
 msgstr "Kaland objektum kiválasztása:"
 
+#, fuzzy
+msgid "Select color"
+msgstr "Lény kiválasztása:"
+
 msgid "Players Icon"
 msgstr "Játékos ikon"
 
@@ -4209,6 +4213,9 @@ msgstr "Ez a varázstárgy"
 msgid "The total number of obelisks is %{count}."
 msgstr "Az obeliszkek száma összesen: %{count}."
 
+msgid "There are no players on the map, so no one can own this object."
+msgstr ""
+
 msgid "Roads"
 msgstr "Utak"
 
@@ -4659,6 +4666,9 @@ msgstr "ESEMÉNYEK"
 msgid "LANGUAGE"
 msgstr "NYELV"
 
+msgid "ABOUT"
+msgstr ""
+
 msgid ""
 "The entered map description exceeds the maximum allowed 5 rows. It will be "
 "shortened to fit the map description field."
@@ -4682,6 +4692,9 @@ msgstr "Térkép nevének megváltoztatása"
 msgid "Change Map Description"
 msgstr "Térképleírás megváltoztatása"
 
+msgid "About"
+msgstr ""
+
 msgid "Click to accept the changes made."
 msgstr "Kattints a változtatások elfogadásához."
 
@@ -4699,6 +4712,11 @@ msgstr "Események"
 
 msgid "Click to change the language of the map."
 msgstr "Kattints a térkép nyelvének megváltoztatásához."
+
+msgid ""
+"Click to edit notes from the map creator. These notes are optional and do "
+"not appear during gameplay."
+msgstr ""
 
 msgid "Click to change your map name."
 msgstr "Kattints a térképed nevének megváltoztatásához."
@@ -5804,6 +5822,14 @@ msgstr ""
 "Az ellenfél elfoglalta %{name} várat!\n"
 "Ők győztek."
 
+#, fuzzy
+msgid ""
+"The enemy has found the %{name}.\n"
+"Your quest is a failure."
+msgstr ""
+"Megtaláltad %{name} varázstárgyat.\n"
+"Küldetés teljesítve."
+
 msgid ""
 "The enemy has built up over %{count} gold in his treasury.\n"
 "You must bow done in defeat before his wealth and power."
@@ -6405,6 +6431,10 @@ msgstr "szlovák"
 
 msgid "Vietnamese"
 msgstr "vietnámi"
+
+#, fuzzy
+msgid "Greek"
+msgstr "Zöld"
 
 msgid "Slow"
 msgstr "Lassú"
@@ -7178,24 +7208,17 @@ msgstr ""
 
 msgid ""
 "After spending hours trying to fish the chest out of the sea, you open it "
-"and find %{gold} gold pieces."
-msgstr ""
-"Több órás munkával sikerül kihalásznod egy ládát a tengerből. Kinyitod, és "
-"%{gold} aranyat találsz benne."
-
-msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it "
 "and find %{gold} gold and the %{art}."
 msgstr ""
 "Több órás munkával sikerül kihalásznod egy ládát a tengerből. Kinyitod, és "
 "%{gold} aranyat valamint egy %{art} varázstárgyat találsz benne."
 
 msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it, "
-"only to find it empty."
+"After spending hours trying to fish the chest out of the sea, you open it "
+"and find %{gold} gold pieces."
 msgstr ""
-"Több órás munkával sikerül kihalásznod egy ládát a tengerből. Kinyitod, de "
-"nem találsz benne semmit sem."
+"Több órás munkával sikerül kihalásznod egy ládát a tengerből. Kinyitod, és "
+"%{gold} aranyat találsz benne."
 
 msgid ""
 "After scouring the area, you fall upon a hidden treasure cache. You may take "
@@ -7205,13 +7228,6 @@ msgstr ""
 "A terület átkutatása után rábukkansz egy elrejtett kincsesraktárra. "
 "Elteheted magadnak az aranyat, vagy szétoszthatod tapasztalati ponttért "
 "cserébe a parasztok között. Megtartod az aranyat?"
-
-msgid ""
-"After scouring the area, you fall upon a hidden chest, containing the "
-"%{gold} gold pieces."
-msgstr ""
-"A terület átkutatása után rábukkansz egy elrejtett ládára, amiben %{gold} "
-"arany van."
 
 msgid ""
 "After scouring the area, you fall upon a hidden chest, containing the "
@@ -7949,6 +7965,18 @@ msgstr ""
 "bámul. Felnéz és azt mondja: \"Utazásaim során sokat megtanultam a titkos "
 "mágia módozatairól. Egy nagy orákulum tanított engem. Tudom a választ arra, "
 "amit keresel.\""
+
+msgid ""
+"The sting of your previous encounter still lingers, and you keep your "
+"distance from the intimidating cat until you have regained your courage in "
+"battle."
+msgstr ""
+
+msgid ""
+"You come upon a great cat, purring as it rubs against your leg. Charmed, you "
+"reach down, but it bites you and flees. At least the laughter at your "
+"misfortune lifts your troops' spirits."
+msgstr ""
 
 msgid "No spell book is present."
 msgstr "Nincs varázskönyved."
@@ -9357,6 +9385,10 @@ msgstr "Mocsaras tó"
 
 msgid "Frozen Lake"
 msgstr "Befagyott tó"
+
+#, fuzzy
+msgid "Black Cat"
+msgstr "Fekete gyöngy"
 
 msgid "randomRace|level 1 creatures"
 msgstr "1. szintű lények"
@@ -12101,6 +12133,20 @@ msgstr ""
 "Letöltheted a legújabb verziót innen:\n"
 "https://github.com/ihhub/\n"
 "fheroes2/releases"
+
+#~ msgid ""
+#~ "After spending hours trying to fish the chest out of the sea, you open "
+#~ "it, only to find it empty."
+#~ msgstr ""
+#~ "Több órás munkával sikerül kihalásznod egy ládát a tengerből. Kinyitod, "
+#~ "de nem találsz benne semmit sem."
+
+#~ msgid ""
+#~ "After scouring the area, you fall upon a hidden chest, containing the "
+#~ "%{gold} gold pieces."
+#~ msgstr ""
+#~ "A terület átkutatása után rábukkansz egy elrejtett ládára, amiben %{gold} "
+#~ "arany van."
 
 #~ msgid ""
 #~ "Select the campaign difficulty. This can be lowered at any point during "

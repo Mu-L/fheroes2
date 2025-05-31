@@ -145,7 +145,12 @@ public:
     };
 
     Castle() = default;
-    Castle( const int32_t posX, const int32_t posY, int race );
+    Castle( const int32_t posX, const int32_t posY, const int race )
+        : MapPosition( { posX, posY } )
+        , _race( race )
+    {
+        // Do nothing.
+    }
 
     Castle( const Castle & ) = delete;
 
@@ -272,7 +277,7 @@ public:
     double getArmyRecruitmentValue() const;
     double getVisitValue( const Heroes & hero ) const;
 
-    void ChangeColor( const int newColor );
+    void ChangeColor( const PlayerColor newColor );
 
     void ActionNewDay();
     void ActionNewWeek();
@@ -369,6 +374,10 @@ public:
     {
         return ( _disabledBuildings & buildingType ) != 0;
     }
+
+    // Update French language-specific characters to match CP1252.
+    // Call this method only when loading maps made with original French editor.
+    void fixFrenchCharactersInName();
 
 private:
     enum class ConstructionDialogResult : int
@@ -551,7 +560,7 @@ public:
 
     Castle * Get( const fheroes2::Point & position ) const;
 
-    void Scout( const int colors ) const;
+    void Scout( const PlayerColorsSet colors ) const;
 
     void NewDay() const;
     void NewWeek() const;

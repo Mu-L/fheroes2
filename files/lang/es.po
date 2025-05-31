@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fheroes2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 14:24+0000\n"
+"POT-Creation-Date: 2025-05-28 00:46+0000\n"
 "PO-Revision-Date: 2025-03-16 22:17+0100\n"
 "Last-Translator: fheroes2 team <fhomm2@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -700,9 +700,6 @@ msgstr "Suerte"
 msgid "Spell Points"
 msgstr "Maná"
 
-msgid "Hero's Options"
-msgstr "Opciones del Héroe"
-
 msgid "Cast Spell"
 msgstr "Lanzar Hechizo"
 
@@ -720,6 +717,9 @@ msgstr "Pantalla de Héroe"
 
 msgid "Captain's Options"
 msgstr "Opciones del capitán"
+
+msgid "Hero's Options"
+msgstr "Opciones del Héroe"
 
 #, fuzzy
 msgid ""
@@ -3634,6 +3634,10 @@ msgstr "Artefactos"
 msgid "Select Adventure Object:"
 msgstr "Artefactos"
 
+#, fuzzy
+msgid "Select color"
+msgstr "Mejor monstruo:"
+
 msgid "Players Icon"
 msgstr "Icono de los jugadores"
 
@@ -4287,6 +4291,9 @@ msgstr "con un artefacto."
 msgid "The total number of obelisks is %{count}."
 msgstr ""
 
+msgid "There are no players on the map, so no one can own this object."
+msgstr ""
+
 #, fuzzy
 msgid "Roads"
 msgstr "Fin del camino"
@@ -4778,6 +4785,9 @@ msgstr "EVENTOS"
 msgid "LANGUAGE"
 msgstr "IDIOMA"
 
+msgid "ABOUT"
+msgstr ""
+
 msgid ""
 "The entered map description exceeds the maximum allowed 5 rows. It will be "
 "shortened to fit the map description field."
@@ -4795,6 +4805,9 @@ msgstr ""
 #, fuzzy
 msgid "Change Map Description"
 msgstr "Descripción seleccionada"
+
+msgid "About"
+msgstr ""
 
 #, fuzzy
 msgid "Click to accept the changes made."
@@ -4817,6 +4830,11 @@ msgstr ""
 #, fuzzy
 msgid "Click to change the language of the map."
 msgstr "Cambiar el idioma del juego."
+
+msgid ""
+"Click to edit notes from the map creator. These notes are optional and do "
+"not appear during gameplay."
+msgstr ""
 
 #, fuzzy
 msgid "Click to change your map name."
@@ -5941,6 +5959,14 @@ msgstr ""
 "¡El enemigo ha capturado %{name}!\n"
 "Son los triunfadores."
 
+#, fuzzy
+msgid ""
+"The enemy has found the %{name}.\n"
+"Your quest is a failure."
+msgstr ""
+"Has encontrado %{name}.\n"
+"Tu búsqueda ha concluido."
+
 msgid ""
 "The enemy has built up over %{count} gold in his treasury.\n"
 "You must bow done in defeat before his wealth and power."
@@ -6531,6 +6557,10 @@ msgstr ""
 
 msgid "Vietnamese"
 msgstr ""
+
+#, fuzzy
+msgid "Greek"
+msgstr "Verde"
 
 msgid "Slow"
 msgstr "Lento"
@@ -7328,24 +7358,17 @@ msgstr ""
 
 msgid ""
 "After spending hours trying to fish the chest out of the sea, you open it "
-"and find %{gold} gold pieces."
-msgstr ""
-"Después de varias horas intentando sacar el cofre del mar, lo abres y "
-"encentras %{gold} piezas de oro."
-
-msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it "
 "and find %{gold} gold and the %{art}."
 msgstr ""
 "Después de pasar horas intentando sacar el cofre del mar, lo abres y "
 "encuentras %{gold} piezas de oro y %{art}"
 
 msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it, "
-"only to find it empty."
+"After spending hours trying to fish the chest out of the sea, you open it "
+"and find %{gold} gold pieces."
 msgstr ""
-"Después de pasar horas intentando sacar el cofre del mar, lo abres y resulta "
-"estar vacío."
+"Después de varias horas intentando sacar el cofre del mar, lo abres y "
+"encentras %{gold} piezas de oro."
 
 msgid ""
 "After scouring the area, you fall upon a hidden treasure cache. You may take "
@@ -7355,13 +7378,6 @@ msgstr ""
 "Después de dar una batida por el área, das con un tesoro escondido. Puedes "
 "quedarte con el oro o distribuirlo entre los campesinos a cambio de "
 "experiencia. ¿Deseas quedarte con el oro?"
-
-msgid ""
-"After scouring the area, you fall upon a hidden chest, containing the "
-"%{gold} gold pieces."
-msgstr ""
-"Después de dar una batida por el área, das con un cofre escondido que "
-"contiene %{gold} piezas de oro."
 
 msgid ""
 "After scouring the area, you fall upon a hidden chest, containing the "
@@ -8093,6 +8109,18 @@ msgstr ""
 "Ella mira hacia arriba y dice,\n"
 "\"En mis viajes, he aprendido mucho del camino de la magia arcana. Un gran "
 "oráculo me paso sus habilidades. Tengo la respuesta que buscas.\""
+
+msgid ""
+"The sting of your previous encounter still lingers, and you keep your "
+"distance from the intimidating cat until you have regained your courage in "
+"battle."
+msgstr ""
+
+msgid ""
+"You come upon a great cat, purring as it rubs against your leg. Charmed, you "
+"reach down, but it bites you and flees. At least the laughter at your "
+"misfortune lifts your troops' spirits."
+msgstr ""
 
 msgid "No spell book is present."
 msgstr "No hay libro de hechizos."
@@ -9514,6 +9542,10 @@ msgstr "Ciénaga"
 
 msgid "Frozen Lake"
 msgstr ""
+
+#, fuzzy
+msgid "Black Cat"
+msgstr "La Perla Negra"
 
 msgid "randomRace|level 1 creatures"
 msgstr ""
@@ -12098,6 +12130,20 @@ msgstr ""
 "Puedes descargar la última versión del juego desde el sítio:\n"
 "https://github.com/ihhub/\n"
 "fheroes2/releases"
+
+#~ msgid ""
+#~ "After spending hours trying to fish the chest out of the sea, you open "
+#~ "it, only to find it empty."
+#~ msgstr ""
+#~ "Después de pasar horas intentando sacar el cofre del mar, lo abres y "
+#~ "resulta estar vacío."
+
+#~ msgid ""
+#~ "After scouring the area, you fall upon a hidden chest, containing the "
+#~ "%{gold} gold pieces."
+#~ msgstr ""
+#~ "Después de dar una batida por el área, das con un cofre escondido que "
+#~ "contiene %{gold} piezas de oro."
 
 #~ msgid "Select count %{resource}:"
 #~ msgstr "Seleccionar cantidad de %{resource}:"

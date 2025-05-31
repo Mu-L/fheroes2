@@ -48,8 +48,6 @@
 #include "ui_button.h"
 #include "ui_dialog.h"
 #include "ui_tool.h"
-#include "world.h"
-#include "world_object_uid.h"
 
 namespace
 {
@@ -132,7 +130,7 @@ namespace
 
         while ( le.HandleEvents() ) {
             for ( size_t i = 0; i < mapSizeCount; ++i ) {
-                buttons[i].drawOnState( le.isMouseLeftButtonPressedInArea( buttons[i].area() ) );
+                buttons[i].drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttons[i].area() ) );
 
                 if ( le.MouseClickLeft( buttons[i].area() ) || Game::HotKeyPressEvent( mapSizeHotkeys[i] ) ) {
                     return mapSizes[i];
@@ -147,7 +145,7 @@ namespace
                 }
             }
 
-            buttonCancel.drawOnState( le.isMouseLeftButtonPressedInArea( buttonCancel.area() ) );
+            buttonCancel.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonCancel.area() ) );
 
             if ( le.MouseClickLeft( buttonCancel.area() ) || Game::HotKeyPressEvent( Game::HotKeyEvent::DEFAULT_CANCEL ) ) {
                 return Maps::ZERO;
@@ -193,9 +191,9 @@ namespace Editor
         LocalEvent & le = LocalEvent::Get();
 
         while ( le.HandleEvents() ) {
-            buttonNewMap.drawOnState( le.isMouseLeftButtonPressedInArea( buttonNewMap.area() ) );
-            buttonLoadMap.drawOnState( le.isMouseLeftButtonPressedInArea( buttonLoadMap.area() ) );
-            buttonCancel.drawOnState( le.isMouseLeftButtonPressedInArea( buttonCancel.area() ) );
+            buttonNewMap.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonNewMap.area() ) );
+            buttonLoadMap.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonLoadMap.area() ) );
+            buttonCancel.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonCancel.area() ) );
 
             if ( le.MouseClickLeft( buttonNewMap.area() ) || Game::HotKeyPressEvent( Game::HotKeyEvent::EDITOR_NEW_MAP_MENU ) ) {
                 return fheroes2::GameMode::EDITOR_NEW_MAP;
@@ -249,26 +247,24 @@ namespace Editor
         LocalEvent & le = LocalEvent::Get();
 
         while ( le.HandleEvents() ) {
-            buttonScratchMap.drawOnState( le.isMouseLeftButtonPressedInArea( buttonScratchMap.area() ) );
+            buttonScratchMap.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonScratchMap.area() ) );
 
             if ( buttonRandomMap.isEnabled() ) {
-                buttonRandomMap.drawOnState( le.isMouseLeftButtonPressedInArea( buttonRandomMap.area() ) );
+                buttonRandomMap.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonRandomMap.area() ) );
             }
 
-            buttonCancel.drawOnState( le.isMouseLeftButtonPressedInArea( buttonCancel.area() ) );
+            buttonCancel.drawOnState( le.isMouseLeftButtonPressedAndHeldInArea( buttonCancel.area() ) );
 
             if ( le.MouseClickLeft( buttonScratchMap.area() ) || Game::HotKeyPressEvent( Game::HotKeyEvent::EDITOR_FROM_SCRATCH_MAP_MENU ) ) {
                 const Maps::MapSize mapSize = selectMapSize();
                 if ( mapSize != Maps::ZERO ) {
-                    world.generateForEditor( mapSize );
-
-                    // Reset object UID to keep track of newly added objects.
-                    Maps::resetObjectUID();
-
                     fheroes2::fadeOutDisplay();
                     Game::setDisplayFadeIn();
 
-                    return Interface::EditorInterface::Get().startEdit( true );
+                    Interface::EditorInterface & editorInterface = Interface::EditorInterface::Get();
+                    if ( editorInterface.generateNewMap( mapSize ) ) {
+                        return editorInterface.startEdit();
+                    }
                 }
                 return fheroes2::GameMode::EDITOR_NEW_MAP;
             }
@@ -325,22 +321,20 @@ namespace Editor
         fheroes2::fadeOutDisplay();
         Game::setDisplayFadeIn();
 
-        return Interface::EditorInterface::Get().startEdit( false );
+        return Interface::EditorInterface::Get().startEdit();
     }
 
     fheroes2::GameMode menuNewFromScratchMap()
     {
         const Maps::MapSize mapSize = selectMapSize();
         if ( mapSize != Maps::ZERO ) {
-            world.generateForEditor( mapSize );
-
-            // Reset object UID to keep track of newly added objects.
-            Maps::resetObjectUID();
-
             fheroes2::fadeOutDisplay();
             Game::setDisplayFadeIn();
 
-            return Interface::EditorInterface::Get().startEdit( true );
+            Interface::EditorInterface & editorInterface = Interface::EditorInterface::Get();
+            if ( editorInterface.generateNewMap( mapSize ) ) {
+                return editorInterface.startEdit();
+            }
         }
         return fheroes2::GameMode::EDITOR_MAIN_MENU;
     }

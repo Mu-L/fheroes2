@@ -33,6 +33,7 @@
 #include "battle_animation.h"
 #include "battle_board.h"
 #include "battle_troop.h"
+#include "color.h"
 #include "cursor.h"
 #include "dialog.h"
 #include "icn.h"
@@ -220,7 +221,7 @@ namespace Battle
 
         TurnOrder & operator=( const TurnOrder & ) = delete;
 
-        void set( const fheroes2::Rect & roi, const std::shared_ptr<const Units> & units, const int opponentColor )
+        void set( const fheroes2::Rect & roi, const std::shared_ptr<const Units> & units, const PlayerColor opponentColor )
         {
             _area = roi;
             _orderOfUnits = units;
@@ -249,7 +250,7 @@ namespace Battle
                           fheroes2::Image & output ) const;
 
         std::weak_ptr<const Units> _orderOfUnits;
-        int _opponentColor{ 0 };
+        PlayerColor _opponentColor{ PlayerColor::NONE };
         fheroes2::Rect _area;
         std::vector<UnitPos> _rects;
     };
@@ -341,7 +342,7 @@ namespace Battle
         void RedrawActionTowerPart2( const Tower & tower, const TargetInfo & target );
         void RedrawActionCatapultPart1( const CastleDefenseStructure catapultTarget, const bool isHit );
         void RedrawActionCatapultPart2( const CastleDefenseStructure catapultTarget );
-        void RedrawActionTeleportSpell( Unit & target, const int32_t dst );
+        void redrawActionTeleportSpell( Unit & target, const int32_t dst );
         void redrawActionEarthquakeSpellPart1( const std::vector<CastleDefenseStructure> & targets );
         void redrawActionEarthquakeSpellPart2( const std::vector<CastleDefenseStructure> & targets );
         void RedrawActionSummonElementalSpell( Unit & target );
@@ -365,8 +366,13 @@ namespace Battle
         void RedrawCover();
         void _redrawBattleGround();
         void _redrawCoverStatic();
-        void RedrawLowObjects( const int32_t cellId );
-        void RedrawHighObjects( const int32_t cellId );
+
+        // Draws cracks and pools that are not higher than the ground level.
+        void _redrawGroundObjects( const int32_t cellId );
+
+        // Draws trees, rocks, bushes and other objects that are higher than the ground level.
+        void _redrawHighObjects( const int32_t cellId );
+
         void RedrawCastle( const Castle & castle, const int32_t cellId );
         void RedrawCastleMainTower( const Castle & castle );
         void RedrawKilled();
@@ -377,16 +383,16 @@ namespace Battle
         void RedrawArmies();
         void RedrawTroopSprite( const Unit & unit );
 
-        fheroes2::Point drawTroopSprite( const Unit & unit, const fheroes2::Sprite & troopSprite );
+        fheroes2::Point _drawTroopSprite( const Unit & unit, const fheroes2::Sprite & troopSprite );
 
         void RedrawTroopCount( const Unit & unit );
 
         void RedrawActionWincesKills( const TargetsInfo & targets, Unit * attacker = nullptr, const Unit * defender = nullptr );
         void RedrawActionArrowSpell( const Unit & target );
         void RedrawActionColdRaySpell( Unit & target );
-        void RedrawActionDisruptingRaySpell( const Unit & target );
-        void RedrawActionBloodLustSpell( const Unit & target );
-        void RedrawActionStoneSpell( const Unit & target );
+        void _redrawActionDisruptingRaySpell( Unit & target );
+        void _redrawActionBloodLustSpell( const Unit & target );
+        void _redrawActionStoneSpell( const Unit & target );
         void RedrawActionColdRingSpell( const int32_t dst, const TargetsInfo & targets );
         void RedrawActionElementalStormSpell( const TargetsInfo & targets );
         void RedrawActionArmageddonSpell();
@@ -415,7 +421,7 @@ namespace Battle
         void UpdateContourColor();
         void CheckGlobalEvents( LocalEvent & );
         void InterruptAutoCombatIfRequested( LocalEvent & le );
-        void SetHeroAnimationReactionToTroopDeath( const int32_t deathColor ) const;
+        void SetHeroAnimationReactionToTroopDeath( const PlayerColor deathColor ) const;
 
         void ProcessingHeroDialogResult( const int result, Actions & actions );
 
@@ -462,7 +468,7 @@ namespace Battle
         uint32_t animation_flags_frame{ 0 };
         int catapult_frame{ 0 };
 
-        int _interruptAutoCombatForColor{ 0 };
+        PlayerColor _interruptAutoCombatForColor{ PlayerColor::NONE };
 
         // The Channel ID of pre-battle sound. Used to check it is over to start the battle music.
         std::optional<int> _preBattleSoundChannelId{ -1 };
@@ -476,7 +482,7 @@ namespace Battle
         const Unit * _currentUnit{ nullptr };
         const Unit * _movingUnit{ nullptr };
         const Unit * _flyingUnit{ nullptr };
-        const fheroes2::Sprite * b_current_sprite{ nullptr };
+        const fheroes2::Sprite * _spriteInsteadCurrentUnit{ nullptr };
         fheroes2::Point _movingPos;
         fheroes2::Point _flyingPos;
 

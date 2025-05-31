@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fheroes2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 14:24+0000\n"
+"POT-Creation-Date: 2025-05-28 00:46+0000\n"
 "PO-Revision-Date: 2025-03-12 23:47+0100\n"
 "Last-Translator: fheroes2 team <fhomm2@gmail.com>\n"
 "Language-Team: \n"
@@ -682,9 +682,6 @@ msgstr "Flaks"
 msgid "Spell Points"
 msgstr "Mana"
 
-msgid "Hero's Options"
-msgstr "Heltevalg"
-
 msgid "Cast Spell"
 msgstr "Bruk trolldom"
 
@@ -702,6 +699,9 @@ msgstr "Heltevindu"
 
 msgid "Captain's Options"
 msgstr "Innstillinger for kapteinen"
+
+msgid "Hero's Options"
+msgstr "Heltevalg"
 
 msgid ""
 "Cast a magical spell. You may only cast one spell per combat round. The "
@@ -3730,6 +3730,10 @@ msgstr "Sjøting"
 msgid "Select Adventure Object:"
 msgstr "Sjøting"
 
+#, fuzzy
+msgid "Select color"
+msgstr "Velg monster:"
+
 msgid "Players Icon"
 msgstr "Spillerikon"
 
@@ -4371,6 +4375,9 @@ msgstr "med 1 skatt."
 msgid "The total number of obelisks is %{count}."
 msgstr ""
 
+msgid "There are no players on the map, so no one can own this object."
+msgstr ""
+
 #, fuzzy
 msgid "Roads"
 msgstr "Vei"
@@ -4868,6 +4875,9 @@ msgstr ""
 msgid "LANGUAGE"
 msgstr ""
 
+msgid "ABOUT"
+msgstr ""
+
 msgid ""
 "The entered map description exceeds the maximum allowed 5 rows. It will be "
 "shortened to fit the map description field."
@@ -4885,6 +4895,9 @@ msgstr ""
 #, fuzzy
 msgid "Change Map Description"
 msgstr "Kartbeskrivelse"
+
+msgid "About"
+msgstr ""
 
 #, fuzzy
 msgid "Click to accept the changes made."
@@ -4908,6 +4921,11 @@ msgstr "Hendelse"
 #, fuzzy
 msgid "Click to change the language of the map."
 msgstr "Endre språket til spillet."
+
+msgid ""
+"Click to edit notes from the map creator. These notes are optional and do "
+"not appear during gameplay."
+msgstr ""
 
 #, fuzzy
 msgid "Click to change your map name."
@@ -6052,6 +6070,14 @@ msgstr ""
 "Fienden har fanget %{name}!\n"
 "De har seiret."
 
+#, fuzzy
+msgid ""
+"The enemy has found the %{name}.\n"
+"Your quest is a failure."
+msgstr ""
+"Du har funnet %{name}.\n"
+"Oppdraget ditt er fullført."
+
 msgid ""
 "The enemy has built up over %{count} gold in his treasury.\n"
 "You must bow done in defeat before his wealth and power."
@@ -6664,6 +6690,10 @@ msgstr ""
 
 msgid "Vietnamese"
 msgstr ""
+
+#, fuzzy
+msgid "Greek"
+msgstr "Grønn"
 
 msgid "Slow"
 msgstr "Treg"
@@ -7474,24 +7504,17 @@ msgstr ""
 
 msgid ""
 "After spending hours trying to fish the chest out of the sea, you open it "
-"and find %{gold} gold pieces."
-msgstr ""
-"Etter å ha strevd i timesvis med å fiske opp kista fra havet, åpner du den "
-"og finner %{gold} gullstykker."
-
-msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it "
 "and find %{gold} gold and the %{art}."
 msgstr ""
 "Etter å ha strevd i timesvis med å fiske opp kista fra havet, åpner du den "
 "og finner %{gold} gullstykker og skatten: %{art}."
 
 msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it, "
-"only to find it empty."
+"After spending hours trying to fish the chest out of the sea, you open it "
+"and find %{gold} gold pieces."
 msgstr ""
 "Etter å ha strevd i timesvis med å fiske opp kista fra havet, åpner du den "
-"kun for å finne ut at den er tom."
+"og finner %{gold} gullstykker."
 
 msgid ""
 "After scouring the area, you fall upon a hidden treasure cache. You may take "
@@ -7502,13 +7525,6 @@ msgstr ""
 "kan enten ta gullet selv, eller dele det ut til fattige bønder imot "
 "erfaringspoeng.\n"
 "Vil du beholde gullet?"
-
-msgid ""
-"After scouring the area, you fall upon a hidden chest, containing the "
-"%{gold} gold pieces."
-msgstr ""
-"Etter å ha gjennomsøkt området kommer du over ei bortgjemt skattekiste som "
-"inneholder %{gold} gullstykker."
 
 msgid ""
 "After scouring the area, you fall upon a hidden chest, containing the "
@@ -8280,6 +8296,18 @@ msgstr ""
 "edelsten. Hun ser opp og sier:\n"
 "\"På vandringene mine har jeg lært mye om mørkets kunster. Jeg har gått i "
 "læren hos et dyktig orakel. Du skal få svaret du søker.\""
+
+msgid ""
+"The sting of your previous encounter still lingers, and you keep your "
+"distance from the intimidating cat until you have regained your courage in "
+"battle."
+msgstr ""
+
+msgid ""
+"You come upon a great cat, purring as it rubs against your leg. Charmed, you "
+"reach down, but it bites you and flees. At least the laughter at your "
+"misfortune lifts your troops' spirits."
+msgstr ""
 
 msgid "No spell book is present."
 msgstr "Det fins ingen tryllebok."
@@ -9755,6 +9783,10 @@ msgstr "Myr"
 
 msgid "Frozen Lake"
 msgstr ""
+
+#, fuzzy
+msgid "Black Cat"
+msgstr "Den sorte perlen"
 
 msgid "randomRace|level 1 creatures"
 msgstr ""
@@ -12636,6 +12668,20 @@ msgstr ""
 "Finn den siste oppdateringen av spillet på\n"
 "https://github.com/ihhub/\n"
 "fheroes2/releases"
+
+#~ msgid ""
+#~ "After spending hours trying to fish the chest out of the sea, you open "
+#~ "it, only to find it empty."
+#~ msgstr ""
+#~ "Etter å ha strevd i timesvis med å fiske opp kista fra havet, åpner du "
+#~ "den kun for å finne ut at den er tom."
+
+#~ msgid ""
+#~ "After scouring the area, you fall upon a hidden chest, containing the "
+#~ "%{gold} gold pieces."
+#~ msgstr ""
+#~ "Etter å ha gjennomsøkt området kommer du over ei bortgjemt skattekiste "
+#~ "som inneholder %{gold} gullstykker."
 
 #~ msgid ""
 #~ "Select the campaign difficulty. This can be lowered at any point during "

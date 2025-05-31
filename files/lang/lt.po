@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fheroes2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 14:24+0000\n"
+"POT-Creation-Date: 2025-05-28 00:46+0000\n"
 "PO-Revision-Date: 2022-09-23 16:14+0200\n"
 "Last-Translator: fheroes2 team <fhomm2@gmail.com>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
@@ -599,9 +599,6 @@ msgstr ""
 msgid "Spell Points"
 msgstr ""
 
-msgid "Hero's Options"
-msgstr ""
-
 msgid "Cast Spell"
 msgstr ""
 
@@ -620,6 +617,9 @@ msgstr ""
 #, fuzzy
 msgid "Captain's Options"
 msgstr "Išeiti iš pilies"
+
+msgid "Hero's Options"
+msgstr ""
 
 msgid ""
 "Cast a magical spell. You may only cast one spell per combat round. The "
@@ -3435,6 +3435,10 @@ msgstr "Magiškas artefaktas"
 msgid "Select Adventure Object:"
 msgstr "Magiškas artefaktas"
 
+#, fuzzy
+msgid "Select color"
+msgstr "Pasirinkti %{name}"
+
 msgid "Players Icon"
 msgstr ""
 
@@ -4043,6 +4047,9 @@ msgstr " su vienu artefaktu"
 msgid "The total number of obelisks is %{count}."
 msgstr ""
 
+msgid "There are no players on the map, so no one can own this object."
+msgstr ""
+
 msgid "Roads"
 msgstr ""
 
@@ -4494,6 +4501,9 @@ msgstr ""
 msgid "LANGUAGE"
 msgstr ""
 
+msgid "ABOUT"
+msgstr ""
+
 msgid ""
 "The entered map description exceeds the maximum allowed 5 rows. It will be "
 "shortened to fit the map description field."
@@ -4509,6 +4519,9 @@ msgid "Change Map Name"
 msgstr ""
 
 msgid "Change Map Description"
+msgstr ""
+
+msgid "About"
 msgstr ""
 
 #, fuzzy
@@ -4532,6 +4545,11 @@ msgstr ""
 #, fuzzy
 msgid "Click to change the language of the map."
 msgstr "Rodyti kitą miestą"
+
+msgid ""
+"Click to edit notes from the map creator. These notes are optional and do "
+"not appear during gameplay."
+msgstr ""
 
 #, fuzzy
 msgid "Click to change your map name."
@@ -5596,6 +5614,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"The enemy has found the %{name}.\n"
+"Your quest is a failure."
+msgstr ""
+
+msgid ""
 "The enemy has built up over %{count} gold in his treasury.\n"
 "You must bow done in defeat before his wealth and power."
 msgstr ""
@@ -6153,6 +6176,9 @@ msgstr ""
 #, fuzzy
 msgid "Vietnamese"
 msgstr "Žiūrėti %{name}"
+
+msgid "Greek"
+msgstr ""
 
 msgid "Slow"
 msgstr ""
@@ -6791,28 +6817,18 @@ msgstr ""
 
 msgid ""
 "After spending hours trying to fish the chest out of the sea, you open it "
-"and find %{gold} gold pieces."
-msgstr ""
-
-msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it "
 "and find %{gold} gold and the %{art}."
 msgstr ""
 
 msgid ""
-"After spending hours trying to fish the chest out of the sea, you open it, "
-"only to find it empty."
+"After spending hours trying to fish the chest out of the sea, you open it "
+"and find %{gold} gold pieces."
 msgstr ""
 
 msgid ""
 "After scouring the area, you fall upon a hidden treasure cache. You may take "
 "the gold or distribute the gold to the peasants for experience. Do you wish "
 "to keep the gold?"
-msgstr ""
-
-msgid ""
-"After scouring the area, you fall upon a hidden chest, containing the "
-"%{gold} gold pieces."
 msgstr ""
 
 msgid ""
@@ -7363,6 +7379,18 @@ msgid ""
 "up and says,\n"
 "\"In my travels, I have learned much in the way of arcane magic. A great "
 "oracle taught me his skill. I have the answer you seek.\""
+msgstr ""
+
+msgid ""
+"The sting of your previous encounter still lingers, and you keep your "
+"distance from the intimidating cat until you have regained your courage in "
+"battle."
+msgstr ""
+
+msgid ""
+"You come upon a great cat, purring as it rubs against your leg. Charmed, you "
+"reach down, but it bites you and flees. At least the laughter at your "
+"misfortune lifts your troops' spirits."
 msgstr ""
 
 msgid "No spell book is present."
@@ -8712,6 +8740,10 @@ msgstr "Pelkė"
 
 msgid "Frozen Lake"
 msgstr ""
+
+#, fuzzy
+msgid "Black Cat"
+msgstr "Juodas bokštas"
 
 msgid "randomRace|level 1 creatures"
 msgstr ""
